@@ -2,7 +2,6 @@ package consul
 
 import (
 	"context"
-	"strings"
 
 	"github.com/hashicorp/consul/api"
 	"github.com/pkg/errors"
@@ -16,8 +15,12 @@ const schemeName = "consul"
 // builder implements resolver.Builder and use for constructing all consul resolvers
 type builder struct{}
 
-func (b *builder) Build(url resolver.Target, cc resolver.ClientConn, opts resolver.BuildOptions) (resolver.Resolver, error) {
-	dsn := strings.Join([]string{schemeName + ":/", url.Authority, url.Endpoint}, "/")
+func (b *builder) Build(target resolver.Target, cc resolver.ClientConn, opts resolver.BuildOptions) (resolver.Resolver, error) {
+	if target.URL.Scheme != schemeName {
+		target.URL.Scheme = schemeName
+	}
+
+	dsn := target.URL.String()
 	tgt, err := parseURL(dsn)
 	if err != nil {
 		return nil, errors.Wrap(err, "Wrong consul URL")

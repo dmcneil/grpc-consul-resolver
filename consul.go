@@ -70,8 +70,8 @@ func watchConsulService(ctx context.Context, s servicer, tgt target, out chan<- 
 				case <-quit:
 					return
 				default:
-					grpclog.Errorf("[Consul resolver] Couldn't fetch endpoints. target={%s}; error={%v}", tgt.String(), err)
 					time.Sleep(bck.Duration())
+
 					continue
 				}
 			}
@@ -140,7 +140,6 @@ func populateEndpoints(ctx context.Context, clientConn resolver.ClientConn, inpu
 			sort.Sort(byAddressString(conns)) // Don't replace the same address list in the balancer
 			clientConn.UpdateState(resolver.State{Addresses: conns})
 		case <-ctx.Done():
-			grpclog.Info("[Consul resolver] Watch has been finished")
 			return
 		}
 	}
