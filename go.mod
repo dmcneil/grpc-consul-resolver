@@ -1,4 +1,4 @@
-module github.com/mbobakov/grpc-consul-resolver
+module github.com/dmcneil/grpc-consul-resolver
 
 go 1.13
 
