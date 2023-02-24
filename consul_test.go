@@ -7,9 +7,10 @@ import (
 
 	"github.com/golang/mock/gomock"
 	"github.com/hashicorp/consul/api"
-	"github.com/mbobakov/grpc-consul-resolver/internal/mocks"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/grpc/resolver"
+
+	"github.com/dmcneil/grpc-consul-resolver/internal/mocks"
 )
 
 func TestPopulateEndpoints(t *testing.T) {
